@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="rw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Login - Management System</title>
+    
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+         html {
+            
+            overflow: hidden; 
+        }
+
+        section {
+            display: flex;
+        }
+
+        aside {
+            background-image: url('./calss.jpg');
+            background-size: cover;
+            background-position: center;
+            width: 50%;
+            height: 100vh;
+        }
+
+        .contain{
+            width: 50%;
+            height: 100vh;
+            background-color: rgb(38, 53, 53);
+            display: flex;
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center;    
+            color: antiquewhite;
+            padding: 0 10%;
+        }
+
+     
+        h2 {
+            font-size: 5vh;
+            margin-bottom: 30px;
+            color: #bbbb10;
+            text-transform: uppercase;
+        }
+
+        .form-label {
+            font-size: 2.5vh;
+            margin-bottom: 10px;
+        }
+
+       input {
+            background-color: rgb(95, 95, 52) ;
+            color: black ;
+            border: none;
+            height: 7vh;
+            width: 50vh;
+            font-weight: bold;
+border-radius: 1vh;
+font-size: 2.5vh;
+
+
+        }
+
+        input::placeholder {
+            color: #8fff73;
+        }
+
+        .btnlog {
+            background-color: #bbbb10;
+            color: black;
+            font-weight: bold;
+            font-family: italic;
+            width: 40%;
+            padding: 12px;
+            margin: 20px;
+height: 40px;
+border-radius: 1vh;
+        }
+        
+
+        .explain{
+            font-size: 3vh;
+            font-family: serif;color: rgb(193, 170, 140);
+        }
+     
+.favour{
+    margin-top: 35%;
+color: white;
+text-shadow: 2px 2px 4px rgba(0,0,0,0.8);z-index: 1;
+font-size: 5vh;
+}
+        .footer-text {
+            margin-top: 20px;
+            font-size: 14px;
+            opacity: 0.7;
+        }
+        section{
+            display: flex;
+  flex-direction: row;
+        }
+        @media screen(){
+            section{
+                flex-direction:column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <section>
+        <aside > 
+
+            <P class="favour">
+         Welcome Back!  Please Enter Your Unique Student Credentials To
+          Access Your Academic Dashboard, Grades, and Resources.
+
+          </P>
+        </aside>
+
+        <div class="contain">
+                <h2>Student Portal Login</h2>
+                <p class="explain">Enter Your Credentials To Access The Portal.</p>
+
+                <form>
+                    <div >
+                        <label>Full Name:</label>
+<br><br>
+      <input type="text" class="info" placeholder="Enter your name" required>
+                    </div>
+
+                 <br>  
+                        <label class="form-label">Student Code /ID:</label>
+                        <br><br>
+
+                        <input type="text" class="info" placeholder="Enter your 
+code" required>
+                        <br><br>
+<label> Student Password:</label> 
+                        <br><br>
+
+<input type="password" placeholder=" Enter your password" hideorshow password>
+
+                    <button type="submit" class="btnlog">LOGIN TO SYSTEM</button>
+                    
+                    <div class="text-center">
+                        <p class="footer-text">Forget Code? Contact the Registrar.</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
