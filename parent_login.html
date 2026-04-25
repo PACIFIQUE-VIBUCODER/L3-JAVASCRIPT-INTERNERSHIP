@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PARENT_login portal</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            background-image:url(./shelby-murphy-figueroa-Psv8aHU9HN0-unsplash.jpg) ;
+            background-size: contain;
+            background-attachment: fixed;
+         background-repeat: no-repeat;
+         background-size: cover;
+         background-position: center;
+         z-index: -1;     
+         text-align: center;
+         justify-content: center;    
+         overflow: hidden;
+}
+        .contain{
+            background-color: rgba(26, 0, 51, 0.915);
+            opacity: 1;
+           position: relative;
+          border-radius: 5vh;
+          box-shadow: 5px 5px 5px 10px solid rgb(0, 0, 0);
+          height: 100vh;
+}
+       aside{
+        background-color: #010a13;
+          height: 70vh;
+        width: 45%;
+        z-index: 5;
+clip-path: polygon(0 0, 100% 0, 150% 100%, 0 100%);  
+border: 5px solid rgb(0, 125, 125);
+filter: drop-shadow(0 0 15px rgb(14, 222, 222));
+color: azure;
+}
+     .info{
+        background:linear-gradient(45deg,#03303a,rgb(11, 53, 53),cyan) ;
+          height: 70vh;
+        width: 80vh;
+         z-index: 5;
+       clip-path: polygon(-0.1% 0%, 30% -150%,145% 100%, 100% 100%, 25% 100%);
+        margin-left: -18%;
+border: 5px solid #00B4D8;
+filter: drop-shadow(0 0 15px rgb(14, 222, 222));
+ }
+        .display{
+          width: 60%;
+height: 75%;
+         background-color: rgb(2, 49, 49);
+          display: flex;
+       margin-left: 30vh;
+       justify-content: center;
+       align-items: center;
+       display: flex;
+       margin-top: 10vh;
+       border-radius: 5vh;
+       animation: show 5s ;
+}
+
+@keyframes show{
+    0%{transform: scale(0); opacity: 0;}
+    100%{transform: scale(1); opacity: 1;}
+}
+.hold{
+    margin-top: 20vh;
+}
+
+.display{
+    filter: drop-shadow(0 0 10px rgb(108, 108, 56));
+}
+input{
+    width: 40vh;
+height: 5vh;
+    background-color: #1ab0cf;
+    border-bottom: 2px solid black;
+    outline: none;
+    border: none;
+    font-size: 2.5vh;
+
+    color: rgb(1, 57, 1);
+}
+i{
+    margin-left:-5vh ;
+}
+button{
+    background-color: #00B4D8;
+    width: 30vh;
+    height: 8vh;
+    border-radius: 2vh;
+    font-family: 'Times New Roman', Times, serif;
+    border: 3px solid rgb(108, 105, 105);
+    filter: drop-shadow(0 0 2vh rgb(250, 87, 87));
+    font-size: 3vh;
+}
+
+.forpush{
+    margin-left: 5vh;
+}
+
+.input1{
+    margin-left: 5vh;
+}
+label{
+    color: wheat;
+}
+button:hover{
+    background-color:rgb(30, 210, 117);
+    color: rgb(203, 8, 8);
+
+}
+input::placeholder{
+    color: black;
+}
+.welcome{
+
+    font-family: serif;
+    animation: clip 10s  infinite;
+}
+@keyframes clip{
+    0%{transform: rotateY(0deg);}
+    50%{transform:rotateY(50deg)}
+    100%{transform: rotatey(0deg);}
+}
+.log{
+    animation: transparent 10s;
+    color: rgb(255, 187, 2);
+}
+@keyframes transparent{
+    0%{opacity: 0;}
+    100%{opacity: 1;}
+}
+input:hover{
+    border: 1vh solid black;
+}
+.footer-text{
+    color: yellow;
+}
+.footer-text:hover{
+    color: khaki;
+}
+    </style>
+</head>
+<body>
+    
+<section>
+
+<form>
+    
+    <div class="contain">
+        <br><br>
+
+        <div class="display">
+<aside>
+    <p class="hold">
+    <h3 class="welcome">WELCOME <br> BACK!</h3>
+        <p>we hope you and your family
+            
+            <br>have a nice day
+        </p>
+</p>
+</aside>
+
+<div class="info" >
+    <h3 class="log">PARENT LOGIN PORTAL</h3>
+    <br>
+    <p>fill this field then continue to access other resource</p>
+
+            <br><br>
+
+    <label>Parent/Guardian name :</label>
+        <br>
+
+    <input type="text" placeholder="enter your name" class="input1">
+    <i class="fas fa-user"></i>
+        <br><br>      
+
+
+    <label>Parent Phone:</label>
+    <p class="forpush">
+    <input type="text" placeholder="enter your phone number">
+    <i class="fas fa-phone"></i>
+    </p>
+        <br><br> 
+
+
+    <label>Password :</label>
+
+    <p class="forpush">
+    <input type="text" placeholder="enter your password">
+    
+    <i class="fas fa-lock"></i>
+    </p>
+<br><br>
+    <button>SIGN IN</button>
+    <br><br>
+    <p class="footer-text">forgot password? i don't have an account</p>
+</div>
+</div>
+</div>
+</form>
+
+</section>
+
+</body>
+</html>
