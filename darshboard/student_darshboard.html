@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Pro - Learning Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2e7d32;
+            --secondary: #1b5e20;
+            --bg: #f4f7f6;
+            --text: #333;
+            --white: #ffffff;
+            --accent: #ffd700;
+        }
+
+        *{ margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--bg); color: var(--text); }
+        
+        .hold { display: flex; }
+
+        /* --- SIDEBAR --- */
+        aside {
+            width: 260px; height: 100vh; background-color: #121212;
+            position: sticky; top: 0; color: white; display: flex; flex-direction: column;
+        }
+        .user-profile {
+            padding: 30px 20px; text-align: center; border-bottom: 1px solid #333;
+        }
+        .user-profile img {
+            width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--primary);
+            margin-bottom: 10px; object-fit: cover;
+        }
+        .nav-links { flex-grow: 1; padding: 20px 0; }
+        .nav-item {
+            padding: 15px 25px; cursor: pointer; display: flex; align-items: center;
+            color: #888; transition: 0.3s; font-size: 0.95rem;
+        }
+        .nav-item:hover, .active-nav { color: var(--white); background: #1e1e1e; border-right: 4px solid var(--primary); }
+        .nav-item i { margin-right: 15px; width: 20px; font-size: 1.1rem; }
+
+        /* --- MAIN DISPLAY --- */
+        .display { width: calc(100% - 260px); padding: 40px; }
+        
+        .header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .date-box { font-weight: 500; color: #666; background: #ddd; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; }
+
+        /* --- DASHBOARD CARDS --- */
+        .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        .stat-card {
+            background: var(--white); padding: 25px; border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.02); position: relative; overflow: hidden;
+        }
+        .stat-card i { position: absolute; right: -10px; bottom: -10px; font-size: 5rem; opacity: 0.05; color: var(--primary); }
+        .stat-card h3 { font-size: 0.85rem; color: #888; text-transform: uppercase; margin-bottom: 5px; }
+        .stat-card .value { font-size: 1.8rem; font-weight: 700; color: var(--primary); }
+
+        /* --- CONTENT AREAS --- */
+        .grid-container { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; margin-top: 30px; }
+        .main-card { background: var(--white); padding: 25px; border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.02); }
+        
+        h2 { font-size: 1.3rem; margin-bottom: 20px; display: flex; align-items: center; }
+        h2 i { margin-right: 10px; color: var(--primary); }
+
+        /* --- PERFORMANCE TABLE --- */
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; padding: 15px; color: #aaa; font-weight: 500; font-size: 0.85rem; border-bottom: 1px solid #eee; }
+        td { padding: 18px 15px; border-bottom: 1px solid #f9f9f9; font-size: 0.95rem; }
+        .grade-badge { padding: 5px 12px; border-radius: 8px; font-weight: 600; font-size: 0.8rem; }
+        .grade-a { background: #e8f5e9; color: #2e7d32; }
+        .grade-b { background: #fff3e0; color: #ef6c00; }
+
+        /* --- ANNOUNCEMENTS --- */
+        .ann-box {
+            padding: 15px; border-radius: 15px; background: #f9f9f9;
+            margin-bottom: 15px; border-left: 4px solid var(--accent);
+        }
+        .ann-box h4 { font-size: 0.95rem; margin-bottom: 5px; }
+        .ann-box p { font-size: 0.85rem; color: #666; line-height: 1.4; }
+        .ann-box small { font-size: 0.75rem; color: #aaa; display: block; margin-top: 8px; }
+
+        /* --- TIMETABLE --- */
+        .tt-item { display: flex; align-items: center; padding: 12px 0; border-bottom: 1px dashed #eee; }
+        .tt-time { min-width: 80px; font-weight: 700; color: var(--primary); font-size: 0.85rem; }
+        .tt-sub { font-size: 0.9rem; font-weight: 500; }
+
+        .section { display: none; animation: fadeIn 0.4s ease; }
+        .active-section { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .btn-logout {
+            margin: 20px; padding: 12px; background: #333; border: none;
+            color: white; border-radius: 10px; cursor: pointer; transition: 0.3s;
+        }
+        .btn-logout:hover { background: #d32f2f; }
+    </style>
+</head>
+<body>
+
+    <section class="hold">
+        <aside>
+            <div class="user-profile">
+                <img src="https://ui-avatars.com/api/?name=Student+User&background=2e7d32&color=fff" alt="Student">
+                <h3>Kezia G.</h3>
+                <p style="font-size: 0.7rem; color: #666;">ID: ST-202401</p>
+            </div>
+            <nav class="nav-links">
+                <div class="nav-item active-nav" onclick="switchTab('dash', this)"><i class="fas fa-th-large"></i> Dashboard</div>
+                <div class="nav-item" onclick="switchTab('academic', this)"><i class="fas fa-graduation-cap"></i> Academic Results</div>
+                <div class="nav-item" onclick="switchTab('schedule', this)"><i class="fas fa-calendar-day"></i> Timetable</div>
+                <div class="nav-item" onclick="switchTab('messages', this)"><i class="fas fa-envelope"></i> Notifications</div>
+            </nav>
+            <button class="btn-logout"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
+        </aside>
+
+        <div class="display">
+            <div class="header-flex">
+                <h1>Welcome Back, Kezia!</h1>
+                <div class="date-box" id="current-date"></div>
+            </div>
+
+            <div id="dash" class="section active-section">
+                <div class="stats-row">
+                    <div class="stat-card"><h3>GPA Average</h3><div class="value">3.8</div><i class="fas fa-star"></i></div>
+                    <div class="stat-card"><h3>Attendance</h3><div class="value">96%</div><i class="fas fa-user-check"></i></div>
+                    <div class="stat-card"><h3>Assignments</h3><div class="value">04</div><i class="fas fa-file-alt"></i></div>
+                    <div class="stat-card"><h3>New Alerts</h3><div class="value" id="alert-count">2</div><i class="fas fa-bell"></i></div>
+                </div>
+
+                <div class="grid-container">
+                    <div class="main-card">
+                        <h2><i class="fas fa-chart-line"></i> Recent Grades</h2>
+                        <table id="dash-grades">
+                            <thead><tr><th>Module Name</th><th>Assignment</th><th>Grade</th></tr></thead>
+                            <tbody id="grade-list">
+                                </tbody>
+                        </table>
+                    </div>
+
+                    <div class="main-card">
+                        <h2><i class="fas fa-bullhorn"></i> School Updates</h2>
+                        <div id="announcement-list">
+                            </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="academic" class="section">
+                <h1>Academic Performance</h1>
+                <div class="main-card" style="margin-top: 25px;">
+                    <table id="full-academic-table">
+                        <thead><tr><th>Module Code</th><th>Subject</th><th>Marks (%)</th><th>Grade</th><th>Status</th></tr></thead>
+                        <tbody id="full-marks-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="schedule" class="section">
+                <h1>Class Timetable</h1>
+                <div class="main-card" style="margin-top: 25px;">
+                    <div id="timetable-display"></div>
+                </div>
+            </div>
+
+            <div id="messages" class="section">
+                <h1>Notifications</h1>
+                <div id="full-notif-list"></div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // --- FETCH DATA FROM SHARED STORAGE ---
+        function loadStudentData() {
+            // Get data posted by Teacher
+            const marks = JSON.parse(localStorage.getItem('sc_marks')) || [];
+            const anns = JSON.parse(localStorage.getItem('sc_ann')) || [];
+            const tt = JSON.parse(localStorage.getItem('tp_tt')) || [];
+
+            // 1. Fill Dash Grades
+            const gradeList = document.getElementById('grade-list');
+            gradeList.innerHTML = marks.slice(0, 4).map(m => `
+                <tr>
+                    <td>${m.name}</td>
+                    <td>Test/Quiz</td>
+                    <td><span class="grade-badge ${m.score >= 80 ? 'grade-a' : 'grade-b'}">${m.score}%</span></td>
+                </tr>
+            `).join('') || '<tr><td colspan="3">No grades recorded yet.</td></tr>';
+
+            // 2. Fill Announcements
+            const annList = document.getElementById('announcement-list');
+            annList.innerHTML = anns.slice(0, 3).map(a => `
+                <div class="ann-box">
+                    <h4>${a.title}</h4>
+                    <p>${a.msg}</p>
+                    <small><i class="fas fa-clock"></i> ${a.date}</small>
+                </div>
+            `).join('') || '<p>No new updates.</p>';
+
+            // 3. Full Marks Section
+            document.getElementById('full-marks-body').innerHTML = marks.map(m => `
+                <tr>
+                    <td>MOD-${Math.floor(Math.random()*1000)}</td>
+                    <td>${m.name}</td>
+                    <td>${m.score}%</td>
+                    <td><b>${m.score >= 80 ? 'A' : m.score >= 60 ? 'B' : 'C'}</b></td>
+                    <td style="color:${m.score >= 50 ? 'green':'red'}">${m.score >= 50 ? 'Passed':'Incomplete'}</td>
+                </tr>
+            `).join('');
+
+            // 4. Timetable
+            const ttDisplay = document.getElementById('timetable-display');
+            ttDisplay.innerHTML = tt.map(t => `
+                <div class="tt-item">
+                    <div class="tt-time">${t.time}</div>
+                    <div class="tt-sub"><b>${t.day}:</b> ${t.sub}</div>
+                </div>
+            `).join('') || '<p>No classes scheduled.</p>';
+
+            // 5. Update Notif Tab
+            document.getElementById('full-notif-list').innerHTML = anns.map(a => `
+                <div class="ann-box" style="background:white; border:1px solid #eee;">
+                    <h4>${a.title}</h4>
+                    <p>${a.msg}</p>
+                    <small>${a.date}</small>
+                </div>
+            `).join('');
+            
+            document.getElementById('alert-count').innerText = anns.length;
+        }
+
+        // --- NAVIGATION ---
+        function switchTab(id, el) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active-section'));
+            document.getElementById(id).classList.add('active-section');
+            
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active-nav'));
+            el.classList.add('active-nav');
+        }
+
+        // --- INIT ---
+        window.onload = () => {
+            document.getElementById('current-date').innerText = new Date().toDateString();
+            loadStudentData();
+        };
+    </script>
+</body>
+</html>

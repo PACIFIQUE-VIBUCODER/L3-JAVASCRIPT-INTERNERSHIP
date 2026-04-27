@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Pro - Full CRUD System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        *{ margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: rgb(175, 190, 178); }
+        .hold{ display: flex; }
+        
+        /* --- SIDEBAR --- */
+        aside {
+            width: 20%; height: 100vh; background-color: rgb(106, 61, 2);
+            position: sticky; top: 0; overflow: hidden; color: white;
+        }
+        .display { width: 80%; padding: 30px; min-height: 100vh; }
+        h2.aside-title { margin: 20px 0; text-align: center; font-size: 3vh; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
+        
+        .nav-item {
+            cursor: pointer; transition: 0.3s; display: flex; align-items: center;
+            padding: 15px; color: darkkhaki; font-size: 2vh; width: 90%;
+            margin: 5px auto; border-radius: 10px;
+        }
+        .nav-item:hover, .active-nav { background-color: darkgoldenrod; color: black; }
+        .nav-item i { margin-right: 15px; width: 20px; text-align: center; }
+
+        /* --- DASHBOARD ELEMENTS --- */
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 25px; }
+        .card { background: white; padding: 20px; border-radius: 12px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-bottom: 5px solid darkgoldenrod; }
+        .card h3 { font-size: 0.9rem; color: #666; margin-bottom: 10px; }
+        .card .num { font-size: 1.8rem; font-weight: bold; color: rgb(106, 61, 2); }
+
+        /* --- CRUD TABLES & FORMS --- */
+        .data-display { background: white; padding: 20px; border-radius: 12px; margin-top: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        h1 { margin-bottom: 20px; color: #333; border-left: 5px solid rgb(106, 61, 2); padding-left: 15px; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+        th { background: #f8f9fa; color: #333; font-weight: 600; }
+        
+        .btn-add { padding: 10px 20px; background: rgb(106, 61, 2); color: white; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 15px; }
+        .btn-save { padding: 12px; background: #2e7d32; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 10px; }
+        .btn-del { color: #d32f2f; background: none; border: none; cursor: pointer; font-size: 1.1rem; }
+        
+        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px; outline: none; }
+        input:focus { border-color: darkgoldenrod; }
+
+        .content-view { display: none; animation: fadeIn 0.3s ease-in-out; }
+        .active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .ann-card { border-left: 4px solid orange; background: #fff8e1; padding: 15px; border-radius: 8px; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+
+<section class="hold">
+    <aside>
+        <h2 class="aside-title">TEACHER PRO</h2>
+        <div class="nav-item active-nav" onclick="navTo('dash', this)"><i class="fas fa-home"></i> Dashboard</div>
+        <div class="nav-item" onclick="navTo('attn', this)"><i class="fas fa-user-check"></i> Attendance</div>
+        <div class="nav-item" onclick="navTo('marks', this)"><i class="fas fa-graduation-cap"></i> Student Marks</div>
+        <div class="nav-item" onclick="navTo('ttable', this)"><i class="fas fa-calendar-alt"></i> Timetable</div>
+        <div class="nav-item" onclick="navTo('announcement', this)"><i class="fas fa-bullhorn"></i> Announcements</div>
+        <div class="nav-item" onclick="navTo('profiles', this)"><i class="fas fa-users"></i> Profiles</div>
+        <div style="padding: 20px;"><button class="btn-save" style="background: olive;">LOG OUT</button></div>
+    </aside>
+
+    <div class="display">
+        <div id="dash" class="content-view active">
+            <h1>General Overview</h1>
+            <div class="stats-grid">
+                <div class="card"><h3>Students</h3><div class="num" id="d-total">0</div></div>
+                <div class="card"><h3>Present</h3><div class="num" id="d-present">0</div></div>
+                <div class="card"><h3>Avg Grade</h3><div class="num" id="d-avg">0%</div></div>
+                <div class="card"><h3>Modules</h3><div class="num" id="d-mod">0</div></div>
+            </div>
+
+            <div class="data-display">
+                <h3><i class="fas fa-history"></i> Recent Activity Log (CRUD Monitor)</h3>
+                <table id="dash-log">
+                    <thead><tr><th>Module</th><th>Summary</th><th>Last Action</th></tr></thead>
+                    <tbody id="log-body"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="attn" class="content-view">
+            <h1>Daily Attendance Control</h1>
+            <div class="data-display">
+                <div id="attn-inputs" style="display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 10px;">
+                    <input type="text" id="at-name" placeholder="Student Name">
+                    <select id="at-gen"><option value="Boy">Boy</option><option value="Girl">Girl</option></select>
+                    <select id="at-status"><option value="Present">Present</option><option value="Absent">Absent</option></select>
+                    <button class="btn-add" onclick="addAttendance()">Add</button>
+                </div>
+                <table id="attn-table">
+                    <thead><tr><th>Name</th><th>Gender</th><th>Status</th><th>Action</th></tr></thead>
+                    <tbody id="attn-body"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="marks" class="content-view">
+            <h1>Academic Records (Marks)</h1>
+            <div class="data-display">
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 10px;">
+                    <input type="text" id="mk-sub" placeholder="Subject">
+                    <input type="text" id="mk-name" placeholder="Student Name">
+                    <input type="number" id="mk-val" placeholder="Marks/100">
+                    <button class="btn-add" onclick="addMark()">Save</button>
+                </div>
+                <table id="marks-table">
+                    <thead><tr><th>Subject</th><th>Student</th><th>Marks</th><th>Action</th></tr></thead>
+                    <tbody id="marks-body"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="ttable" class="content-view">
+            <h1>Class Timetable</h1>
+            <div class="data-display">
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 10px;">
+                    <input type="text" id="tt-day" placeholder="Day">
+                    <input type="text" id="tt-time" placeholder="Time">
+                    <input type="text" id="tt-sub" placeholder="Subject">
+                    <button class="btn-add" onclick="addTT()">Add</button>
+                </div>
+                <table id="tt-table">
+                    <thead><tr><th>Day</th><th>Time</th><th>Subject</th><th>Action</th></tr></thead>
+                    <tbody id="tt-body"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="announcement" class="content-view">
+            <h1>Announcements Manager</h1>
+            <div class="data-display">
+                <input type="text" id="an-title" placeholder="Title">
+                <textarea id="an-msg" placeholder="Message content..."></textarea>
+                <button class="btn-save" onclick="addAnn()">POST ANNOUNCEMENT</button>
+                <div id="ann-list" style="margin-top: 20px;"></div>
+            </div>
+        </div>
+
+        <div id="profiles" class="content-view">
+            <h1>Student Profiles (Master List)</h1>
+            <div class="data-display" id="profile-container">
+                </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // --- DATABASE (Local Storage) ---
+    let db = {
+        attendance: JSON.parse(localStorage.getItem('tp_attn')) || [],
+        marks: JSON.parse(localStorage.getItem('tp_marks')) || [],
+        timetable: JSON.parse(localStorage.getItem('tp_tt')) || [],
+        announcements: JSON.parse(localStorage.getItem('tp_ann')) || []
+    };
+
+    function saveDB() {
+        localStorage.setItem('tp_attn', JSON.stringify(db.attendance));
+        localStorage.setItem('tp_marks', JSON.stringify(db.marks));
+        localStorage.setItem('tp_tt', JSON.stringify(db.timetable));
+        localStorage.setItem('tp_ann', JSON.stringify(db.announcements));
+        refreshUI();
+    }
+
+    // --- NAVIGATION ---
+    function navTo(id, el) {
+        document.querySelectorAll('.content-view').forEach(v => v.classList.remove('active'));
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active-nav'));
+        document.getElementById(id).classList.add('active');
+        el.classList.add('active-nav');
+    }
+
+    // --- CRUD OPERATIONS ---
+
+    // 1. Attendance
+    function addAttendance() {
+        const name = document.getElementById('at-name').value;
+        const gen = document.getElementById('at-gen').value;
+        const status = document.getElementById('at-status').value;
+        if(!name) return;
+        db.attendance.push({ id: Date.now(), name, gen, status });
+        document.getElementById('at-name').value = '';
+        saveDB();
+    }
+
+    // 2. Marks
+    function addMark() {
+        const sub = document.getElementById('mk-sub').value;
+        const name = document.getElementById('mk-name').value;
+        const val = document.getElementById('mk-val').value;
+        if(!sub || !name || !val) return;
+        db.marks.push({ id: Date.now(), sub, name, val: Number(val) });
+        saveDB();
+    }
+
+    // 3. Timetable
+    function addTT() {
+        const day = document.getElementById('tt-day').value;
+        const time = document.getElementById('tt-time').value;
+        const sub = document.getElementById('tt-sub').value;
+        if(!day || !time || !sub) return;
+        db.timetable.push({ id: Date.now(), day, time, sub });
+        saveDB();
+    }
+
+    // 4. Announcements
+    function addAnn() {
+        const title = document.getElementById('an-title').value;
+        const msg = document.getElementById('an-msg').value;
+        if(!title || !msg) return;
+        db.announcements.unshift({ id: Date.now(), title, msg, date: new Date().toLocaleDateString() });
+        saveDB();
+    }
+
+    // DELETE Function (Universal)
+    function deleteItem(arrayName, id) {
+        db[arrayName] = db[arrayName].filter(item => item.id !== id);
+        saveDB();
+    }
+
+    // --- REFRESH UI & DASHBOARD ---
+    function refreshUI() {
+        // Stats
+        const totalStd = db.attendance.length;
+        const present = db.attendance.filter(a => a.status === 'Present').length;
+        const avg = db.marks.length > 0 ? (db.marks.reduce((a, b) => a + b.val, 0) / db.marks.length).toFixed(1) : 0;
+        const mods = [...new Set(db.marks.map(m => m.sub))].length;
+
+        document.getElementById('d-total').innerText = totalStd;
+        document.getElementById('d-present').innerText = present;
+        document.getElementById('d-avg').innerText = avg + "%";
+        document.getElementById('d-mod').innerText = mods;
+
+        // Attendance Table
+        document.getElementById('attn-body').innerHTML = db.attendance.map(a => `
+            <tr><td>${a.name}</td><td>${a.gen}</td><td>${a.status}</td>
+            <td><button class="btn-del" onclick="deleteItem('attendance', ${a.id})"><i class="fas fa-trash"></i></button></td></tr>
+        `).join('');
+
+        // Marks Table
+        document.getElementById('marks-body').innerHTML = db.marks.map(m => `
+            <tr><td>${m.sub}</td><td>${m.name}</td><td>${m.val}%</td>
+            <td><button class="btn-del" onclick="deleteItem('marks', ${m.id})"><i class="fas fa-trash"></i></button></td></tr>
+        `).join('');
+
+        // Timetable Table
+        document.getElementById('tt-body').innerHTML = db.timetable.map(t => `
+            <tr><td>${t.day}</td><td>${t.time}</td><td>${t.sub}</td>
+            <td><button class="btn-del" onclick="deleteItem('timetable', ${t.id})"><i class="fas fa-trash"></i></button></td></tr>
+        `).join('');
+
+        // Announcements List
+        document.getElementById('ann-list').innerHTML = db.announcements.map(an => `
+            <div class="ann-card">
+                <div style="display:flex; justify-content:space-between;">
+                    <strong>${an.title}</strong>
+                    <button class="btn-del" onclick="deleteItem('announcements', ${an.id})">×</button>
+                </div>
+                <p>${an.msg}</p><small>${an.date}</small>
+            </div>
+        `).join('');
+
+        // Profiles Master List
+        document.getElementById('profile-container').innerHTML = `
+            <table>
+                <thead><tr><th>Student Name</th><th>Gender</th><th>Status</th></tr></thead>
+                <tbody>
+                    ${db.attendance.map(s => `<tr><td>${s.name}</td><td>${s.gen}</td><td>Active</td></tr>`).join('')}
+                </tbody>
+            </table>
+        `;
+
+        // Dashboard Log (Recent Activity)
+        document.getElementById('log-body').innerHTML = `
+            <tr><td>Attendance</td><td>${present}/${totalStd} Students Present</td><td>Live Updates</td></tr>
+            <tr><td>Academic</td><td>${db.marks.length} Records found</td><td>Latest Entry</td></tr>
+            <tr><td>Schedule</td><td>${db.timetable.length} Sessions set</td><td>Active</td></tr>
+        `;
+    }
+
+    // Initial Load
+    window.onload = refreshUI;
+</script>
+
+</body>
+</html>

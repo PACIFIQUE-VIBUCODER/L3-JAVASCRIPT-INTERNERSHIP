@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Login Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: rgb(2, 22, 6);
+            overflow-x: hidden;
+        }
+
+        .hold {
+            display: flex;
+            flex-wrap: wrap; /* Bituma ibice bimanukana kuri telefone */
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        aside {
+            width: 50%;
+            height: 100vh;
+            background-color: rgb(21, 15, 7);
+            position: relative;
+            overflow: hidden; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .content {
+            width: 50%;
+            min-height: 100vh;
+            background-color: rgb(2, 22, 6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* Animation y'amafoto */
+        img {
+            position: absolute;
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            left: 100%; 
+            animation: slide 30s infinite; 
+            opacity: 0.6;
+        }
+
+        .img1 { animation-delay: 0s; }
+        .img2 { animation-delay: 10s; }
+        .img3 { animation-delay: 20s; }
+
+        @keyframes slide {
+            0% { left: 100%; }      
+            10% { left: 0%; }       
+            30% { left: 0%; }      
+            40% { left: -100%; }    
+            100% { left: -100%; }   
+        }
+
+        .give-teacher {
+            color: rgb(255, 255, 255);
+            z-index: 5;
+            font-size: 1.5rem;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.9);
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #ccc;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+
+        form {
+            background-color: silver;
+            padding: 40px;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 450px; /* Bituma ifomu itaba nini birenze */
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            border: 3px solid white;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-box {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            color: black;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            height: 45px;
+            padding: 0 10px 0 40px;
+            font-size: 1rem;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            outline: none;
+        }
+
+        input:focus {
+            border: 2px solid black;
+        }
+
+        .input-box i {
+            position: absolute;
+            left: 12px;
+            bottom: 12px;
+            color: #333;
+        }
+
+        button {
+            width: 100%;
+            height: 50px;
+            background-color: black;
+            color: darkkhaki;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #222;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .footer-links {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .footer-text, .back {
+            color: #090120;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .back:hover {
+            color: #820000;
+            font-weight: bold;
+        }
+
+        /* --- MEDIA QUERIES --- */
+        @media (max-width: 850px) {
+            aside {
+                width: 100%;
+                height: 40vh; /* Ifoto iba nto kuri telefone */
+            }
+            .content {
+                width: 100%;
+                padding: 40px 15px;
+            }
+            .give-teacher {
+                font-size: 1.2rem;
+            }
+            form {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="hold">
+        <aside>
+            <img src="./images.jpg" class="img1" alt="Slide 1">
+            <img src="./teacher.jpg" class="img2" alt="Slide 2">
+            <img src="./techer.jpg" class="img3" alt="Slide 3">
+            <div class="give-teacher"> 
+                <p>Welcome Back!</p>
+                <p style="font-size: 1rem;">Empowering Educators, Shaping Futures.</p>
+            </div>
+        </aside>
+        
+        <div class="content">
+            <h1>Teacher Login Portal</h1>
+            <form id="teacherloginform">
+                <div class="input-box">
+                    <label>Username:</label>
+                    <input type="text" name="username" placeholder="Enter your Name" id="username" required>
+                    <i class="fas fa-user"></i>
+                </div>
+
+                <div class="input-box">
+                    <label>Password:</label>
+                    <input type="password" name="password" placeholder="Enter your Password" id="password" required>
+                    <i class="fas fa-lock"></i>
+                </div>
+
+                <button type="submit">Login</button>
+                
+                <div class="footer-links">
+                    <a href="#" class="footer-text">Forgot password? Create an account</a>
+    <a href="../index.html" class="back" style="color: aliceblue;">Back to Home</a>
+                </div>
+            </form>
+        </div>
+    </section>
+   
+    <script>
+        document.getElementById('teacherloginform').addEventListener('submit', function(event){
+            event.preventDefault();
+            alert('Login Successful! Welcome to the Teacher Portal');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 90%;
+    max-width: 800px;
+    margin: 40px auto;
+    text-align: center;
+}
+
+
+.card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.02);
+}
+
+
+.card img {
+    width: 100%;
+    height: auto;
+
+.details {
+    padding: 20px;
+}
+
+.price {
+    font-size: 24px;
+    color: #2ecc71;
+    font-weight: bold;
+}
+
+.whatsapp-btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 12px 20px;
+    background-color: #25D366;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.whatsapp-btn:hover {
+    background-color: #1ebe5d;
+}

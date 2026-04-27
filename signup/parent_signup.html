@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="rw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Page</title>
+    <style>
+        body {
+            background-color: #002200; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center; /* Bishyira ifomu hagati neza */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh; /* Bituma iguma hagati mu burebure bwose */
+            margin: 0;
+            padding: 20px;
+        }
+
+        .main-container {
+            background-color: #b1b1b1;
+            padding: 30px;
+            border-radius: 25px;
+            width: 100%; /* Ifata ubugari bwose ihari */
+            max-width: 500px; /* Ariko ntirenze 500px kuri mudasobwa */
+            box-shadow: 15px 15px 30px rgba(0,0,0,0.7);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        label {
+            display: block;
+            font-size: 1.2rem; /* Akoresha rem kugira ngo bibe responsive */
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #111;
+        }
+
+        input {
+            width: 100%; /* Ifata umwanya wose w'ifomu */
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #777;
+            font-size: 16px;
+            box-sizing: border-box; 
+        }
+
+        button {
+            width: 100%; /* Kuri telefone akenshi buto nini niyo nziza */
+            max-width: 180px; 
+            height: 55px;
+            align-self: center; /* Ishyira buto hagati */
+            margin-top: 10px;
+            border-radius: 15px;
+            background-color: black;
+            color: darkkhaki;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0px 4px 10px rgb(16, 82, 2);
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            background-color: #1a1a1a;
+            box-shadow: 0px 0px 20px rgb(30, 150, 4);
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* --- Media Query kuri telefone ntoya --- */
+        @media (max-width: 400px) {
+            .main-container {
+                padding: 20px;
+            }
+            label {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <form>
+            <div class="input-group">
+                <label>Parent Name:</label>
+                <input type="text" placeholder="Enter your Name" required>
+            </div>
+
+            <div class="input-group">
+                <label>Phone Number:</label>
+                <input type="tel" placeholder="Enter your Phone Number" required>
+            </div>
+
+            <div class="input-group">
+                <label>Password:</label>
+                <input type="password" placeholder="Enter your Password" required>
+            </div>
+
+            <div class="input-group">
+                <label>Confirm Password:</label>
+                <input type="password" placeholder="Confirm your Password" required>
+            </div>
+
+            <button type="submit">Sign Up</button>
+            
+            <a href="../index.html" class="back" style="color: rgb(61, 88, 112);">Back to Home</a>
+        </form>
+    </div>
+
+    <script>
+        const form = document.querySelector('form');
+        
+        form.addEventListener('submit', function(event) {
+            const passwordInputs = document.querySelectorAll('input[type="password"]');
+            const password = passwordInputs[0].value;
+            const confirmPassword = passwordInputs[1].value;
+            const parentName = document.querySelector('input[type="text"]').value;
+
+            if (password === "" || confirmPassword === "" || parentName === "") {
+                event.preventDefault(); 
+                alert("All fields are required!");
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                event.preventDefault(); 
+                alert("Passwords don't match!");
+            } else {
+                alert("Sign up was successful for " + parentName);
+            }
+        });
+    </script>
+
+</body>
+</html>

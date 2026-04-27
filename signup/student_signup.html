@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="rw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal - Sign Up</title>
+    <style>
+        /* --- CSS STYLES --- */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            background-color: #2c3e3e; /* Byihuta mu gihe ifoto itaraza */
+        }
+
+        .main-wrapper {
+            display: flex;
+            width: 100%;
+            flex-direction: row; /* Bisanzwe bimeze gutya kuri PC */
+        }
+
+        /* Igice cy'ibumoso kirimo ifoto */
+        .left-side {
+            flex: 1;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+                        url('https://images.unsplash.com/photo-1523050853063-bd388f9c7d13?auto=format&fit=crop&w=1000');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            padding: 40px;
+        }
+
+        .left-side h1 {
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+            line-height: 1.2;
+            text-align: center;
+        }
+
+        /* Igice cy'iburyo (Form) */
+        .right-side {
+            flex: 1;
+            background-color: #2c3e3e;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #d4d4aa;
+            padding: 40px 20px;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h2 {
+            color: #e2e232;
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+            color: #ffffff;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            padding-right: 45px;
+            border-radius: 8px;
+            border: 1px solid transparent;
+            background-color: #444c35; 
+            color: #ccff99;
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border: 1px solid #e2e232;
+            background-color: #555d42;
+        }
+
+        .icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+        }
+
+        .signup-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #d4d431;
+            border: none;
+            border-radius: 5px;
+            color: black;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+
+        .signup-btn:hover {
+            background-color: #eaea45;
+            transform: translateY(-2px);
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: aliceblue;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        /* --- MEDIA QUERIES --- */
+        /* Ibi bituma kuri telefone ibice bimanuka */
+        @media (max-width: 850px) {
+            body {
+                display: block; /* Ineza kuri Mobile */
+            }
+            .main-wrapper {
+                flex-direction: column;
+            }
+            .left-side {
+                padding: 60px 20px;
+                min-height: 30vh;
+            }
+            .left-side h1 {
+                font-size: 1.8rem;
+            }
+            .right-side {
+                padding: 40px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-wrapper">
+        <div class="left-side">
+            <h1>Welcome! Please Create Your Account To Access Academic Dashboard.</h1>
+        </div>
+
+        <div class="right-side">
+            <div class="form-container">
+                <h2>STUDENT REGISTRATION</h2>
+                <p class="subtitle">Enter Your Details To Create An Account.</p>
+
+                <form id="regForm">
+                    <div class="input-group">
+                        <label>Full Name:</label>
+                        <div class="input-wrapper">
+                            <input type="text" placeholder="Enter your name" required>
+                            <span class="icon">👤</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Student Code / ID:</label>
+                        <div class="input-wrapper">
+                            <input type="text" placeholder="Enter your code" required>
+                            <span class="icon">🆔</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Create Password:</label>
+                        <div class="input-wrapper">
+                            <input type="password" placeholder="Enter your password" required>
+                            <span class="icon">🔒</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Confirm Password:</label>
+                        <div class="input-wrapper">
+                            <input type="password" placeholder="Repeat your password" required>
+                            <span class="icon">🔒</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="signup-btn">SIGN UP</button>
+                    <a href="../index.html" class="back-link">Back to Home</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('regForm');
+        
+        form.addEventListener('submit', function(event) {
+            const inputs = form.querySelectorAll('input');
+            const fullName = inputs[0].value;
+            const studentID = inputs[1].value;
+            const password = inputs[2].value;
+            const confirmPassword = inputs[3].value;
+
+            if (fullName === "" || studentID === "" || password === "" || confirmPassword === "") {
+                event.preventDefault();
+                alert("All fields are required!");
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                event.preventDefault(); 
+                alert("Your passwords don't match!");
+            } else {
+                alert("Registration successful for " + fullName);
+            }
+        });
+    </script>
+</body>
+</html>
